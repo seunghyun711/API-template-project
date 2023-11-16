@@ -5,6 +5,7 @@ import com.app.api.login.service.OauthLoginService;
 import com.app.api.login.validator.OauthValidator;
 import com.app.domain.member.constant.MemberType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/oauth")
+@Slf4j
 public class OauthLoginController {
 
     private final OauthValidator oauthValidator;
@@ -23,11 +25,13 @@ public class OauthLoginController {
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         oauthValidator.validateAuthorization(authorizationHeader);
         oauthValidator.validateMemberType(dto.getMemberType());
+        log.info("dto.getMemberType : {}", dto.getMemberType());
 
         String accessToken = authorizationHeader.split(" ")[1];
 
-        oauthLoginService.oauthLogin(accessToken, MemberType.from(dto.getMemberType()));
+        OauthLoginDto.Response jwtTokenResponse =
+                oauthLoginService.oauthLogin(accessToken, MemberType.from(dto.getMemberType()));
 
-        return ResponseEntity.ok(OauthLoginDto.Response.builder().build());
+        return ResponseEntity.ok(jwtTokenResponse);
     }
 }
