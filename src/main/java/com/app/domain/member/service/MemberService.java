@@ -3,11 +3,13 @@ package com.app.domain.member.service;
 import com.app.domain.member.entity.Member;
 import com.app.domain.member.repository.MemberRepository;
 import com.app.global.error.ErrorCode;
+import com.app.global.error.exception.AuthenticationException;
 import com.app.global.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -30,7 +32,19 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true) // 읽기 기능만 사용
     public Optional<Member> findMemberByEmail(String email) {
         return memberRepository.findByEmail(email);
+    }
+
+    @Transactional(readOnly = true) // 읽기 기능만 사용
+    public Member findMemberByRefreshToken(String refreshToken) { // 리프레시 토큰으로 회원 찾기
+        Member member = memberRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new AuthenticationException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));
+        LocalDateTime tokenExpirationTime = member.getTokenExpirationTime();
+        if(tokenExpirationTime.isBefore(LocalDateTime.now())) { // 리프레시 토큰의 만료시간이 현재 시간보다 이전이면(리프레시 토큰이 만료된 경우)예외처리
+            throw new AuthenticationException(ErrorCode.REFRESH_TOKEN_EXPIRED);
+        }
+        return member;
     }
 }

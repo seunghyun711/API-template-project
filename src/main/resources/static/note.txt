@@ -39,3 +39,10 @@ OauthValidator : 필수값 체크하기 위한 클래스
 MemberRepository : JPA를 이용한 데이터 처리하는 인터페이스
 MemberService : 회원 관련 로직을 구현한 클래스
 DateTimeUtils : Date를 LocalDateTime 형식으로 변환
+
+<Access Token 재발급>
+AuthorizationHeaderUtils : Authorization Header 검증 클래스
+TokenController : 액세스 토큰 재발급하는 요청을 하는 controller 클래스
+AccessTokenResponseDto : 액세스 토큰 재발급 시 응답 필드 설정하는 DTO 클래스
+TokenService : 토큰 관련 로직 - 리프레시 토큰으로 회원 찾는 로직
+
