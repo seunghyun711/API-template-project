@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -46,5 +47,10 @@ public class MemberService {
             throw new AuthenticationException(ErrorCode.REFRESH_TOKEN_EXPIRED);
         }
         return member;
+    }
+
+    public Member findMemberByMemberId(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() ->
+                new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS.getMessage()));
     }
 }

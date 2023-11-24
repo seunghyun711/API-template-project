@@ -66,4 +66,9 @@ public class Member extends BaseEntity {
     public void setMemberType(MemberType memberType) {
         this.memberType = memberType;
     }
+
+    // 토큰 만료 시간을 현재시간으로 설정
+    public void expireRefreshToken(LocalDateTime now) {
+        this.tokenExpirationTime = now;
+    }
 }

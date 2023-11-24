@@ -46,3 +46,6 @@ TokenController : 액세스 토큰 재발급하는 요청을 하는 controller �
 AccessTokenResponseDto : 액세스 토큰 재발급 시 응답 필드 설정하는 DTO 클래스
 TokenService : 토큰 관련 로직 - 리프레시 토큰으로 회원 찾는 로직
 
+<로그아웃>
+LogoutService : 토큰 및 토큰 타입 검증 후 로그아웃을 하는 회원의 리프레시 토큰을 만료시킴
+
