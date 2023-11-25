@@ -54,3 +54,11 @@ AuthenticationInterceptor : 요청하는 로직을 처리하기 전에 현재 �
 MemberInfoController : 회원 정보 조회를 요청하는 컨트롤러
 MemberInfoService : MemberInfoController에 들어온 요청에 대한 처리를 하는 로직
 MemberInfoResponseDto : MemberInfoController의 요청에 응답을 위한 dto 클래스
+
+<MemberInfoArgumentResolver>
+-기존에는 토큰에서 회원 아이디나 정보가 필요 시 tokenmanger를 통해 claims정보를 가져온 후 여기에서 회원과 관련된 정보를 가져와야 했다.
+argumentResolver를 구현해서 컨트롤러 클래스 메서드의 파라미터로 바로 받을 수 있도록 구현한다.
+
+MemberInfo - 회원 정보 조회 로직에 접근할 수 있도록 하는 어노테이션
+MemberInfoArgumentResolver - 토큰에 있는 회원의 정보를 가져오는 로직
+MemberInfoDto - 응답할 회원의 값을 담은 dto 클래스

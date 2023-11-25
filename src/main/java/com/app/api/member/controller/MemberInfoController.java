@@ -3,6 +3,8 @@ package com.app.api.member.controller;
 import com.app.api.member.dto.MemberInfoResponseDto;
 import com.app.api.member.service.MemberInfoService;
 import com.app.global.jwt.service.TokenManager;
+import com.app.global.resolver.memberinfo.MemberInfo;
+import com.app.global.resolver.memberinfo.MemberInfoDto;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +22,24 @@ public class MemberInfoController {
     private final TokenManager tokenManager;
 
     // 회원 정보 조회하는 기능
+//    @GetMapping("/info")
+//    public ResponseEntity<MemberInfoResponseDto> getMemberInfo(
+//            @RequestHeader("Authorization") String authorizationHeader
+//    ) {
+//        String accessToken = authorizationHeader.split(" ")[1];
+//        Claims tokenClaims = tokenManager.getTokenClaims(accessToken);
+//        Long memberId = Long.valueOf((Integer) tokenClaims.get("memberId"));
+//        MemberInfoResponseDto memberInfoResponseDto = memberInfoService.getMemberInfo(memberId);
+//
+//        return ResponseEntity.ok(memberInfoResponseDto);
+//    }
+
+    // MemberInfoArgumentResolver 적용 후
     @GetMapping("/info")
     public ResponseEntity<MemberInfoResponseDto> getMemberInfo(
-            @RequestHeader("Authorization") String authorizationHeader
+            @MemberInfo MemberInfoDto memberInfoDto
     ) {
-        String accessToken = authorizationHeader.split(" ")[1];
-        Claims tokenClaims = tokenManager.getTokenClaims(accessToken);
-        Long memberId = Long.valueOf((Integer) tokenClaims.get("memberId"));
+        Long memberId = memberInfoDto.getMemberId();
         MemberInfoResponseDto memberInfoResponseDto = memberInfoService.getMemberInfo(memberId);
 
         return ResponseEntity.ok(memberInfoResponseDto);
