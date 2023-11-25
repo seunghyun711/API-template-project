@@ -67,3 +67,8 @@ MemberInfoDto - 응답할 회원의 값을 담은 dto 클래스
 액세스 토큰의 role이 ADMIN인지 검사
 AdminAuthorizationInterceptor - 회원의 권한이 ADMIN이면 요청에 대한 인가 허용하고, AMDIN이 아니면 에러 발생 시키는 인터셉터 클래스
 AdminTestController - 인가 테스트를 위한 컨트롤러
+
+<yml 암호화>
+jasypt(Java Simplified Encryption) - 암호화 기능을 제공하는 라이브러리
+JasyptConfig : Jasypt을 이용한 암호화 설정 클래스
+JasyptTest : Jasypt을 이용한 암호화 테스트
