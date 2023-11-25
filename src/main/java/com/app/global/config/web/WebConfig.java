@@ -1,5 +1,6 @@
 package com.app.global.config.web;
 
+import com.app.global.interceptor.AdminAuthorizationInterceptor;
 import com.app.global.interceptor.AuthenticationInterceptor;
 import com.app.global.resolver.memberinfo.MemberInfoArgumentResolver;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     private final AuthenticationInterceptor authenticationInterceptor;
     private final MemberInfoArgumentResolver memberInfoArgumentResolver;
+    private final AdminAuthorizationInterceptor adminAuthorizationInterceptor;
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**") // api 경로로 오는 요청은 cors 설정
@@ -40,6 +42,10 @@ public class WebConfig implements WebMvcConfigurer {
                         "/api/access-token/issue",
                         "/api/logout",
                         "/api/health");
+
+        registry.addInterceptor(adminAuthorizationInterceptor)
+                .order(2)
+                .addPathPatterns("/api/admin/**");
     }
 
     @Override
