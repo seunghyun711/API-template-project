@@ -72,3 +72,8 @@ AdminTestController - 인가 테스트를 위한 컨트롤러
 jasypt(Java Simplified Encryption) - 암호화 기능을 제공하는 라이브러리
 JasyptConfig : Jasypt을 이용한 암호화 설정 클래스
 JasyptTest : Jasypt을 이용한 암호화 테스트
+
+<Swagger>
+- OAS(Open API Specification)를 위한 프레임워크
+- API 문서화를 어노테이션으로 자동화 할 수 있게 도와준다.
+-
